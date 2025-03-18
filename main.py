@@ -65,6 +65,9 @@ class Token_t(Enum):
     LESS_EQ_SIGN = auto()
     LOGIC_EQ_SIGN = auto()
     TYPE_DECLARATION = auto()
+    HASH_SYMB = auto()
+    PERIOD = auto()
+    COMMA = auto()
 
     NEW_LINE = auto()
     TAB = auto()
@@ -94,7 +97,7 @@ class Lexer:
 
         self.error_log : List[ERROR] = []
 
-        self.valid_chars : str= string.ascii_letters + string.digits + ":;.,><+*/-()^|%=[]{}'\" \n \t"
+        self.valid_chars : str= string.ascii_letters + string.digits + ".,#:;.,><+*/-()^|%=[]{}'\" \n \t"
         self.valid_name_chars : str= string.ascii_letters + "_"
         if not all(char in self.valid_chars for char in self.text):
             self.push_error(ERROR(Error_t.INVALID_CHAR, Location(0,''), "Input string contain invalid characters."))
@@ -271,6 +274,18 @@ class Lexer:
             value = self.current
             self.next()
             return Token(Token_t.CLOSE_CURLY, value) 
+        if self.current == '.':
+            value = self.current
+            self.next()
+            return Token(Token_t.PERIOD, value) 
+        if self.current == ',':
+            value = self.current
+            self.next()
+            return Token(Token_t.COMMA, value) 
+        if self.current == '#':
+            value = self.current
+            self.next()
+            return Token(Token_t.HASH_SYMB, value) 
 
         if self.current == '^':
             value = self.current
