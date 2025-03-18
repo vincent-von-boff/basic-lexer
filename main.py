@@ -1,3 +1,4 @@
+import sys
 import string
 from enum import Enum, auto
 from dataclasses import dataclass
@@ -341,15 +342,29 @@ class Lexer:
                               "Cannot tokenize unknown char."))
         return Error_t.UNKNOWN_CHAR
 
-with open("./input_test.txt") as file:
-    input_test = file.read()
-lexer = Lexer(input_test)
-print("Input text: ")
-print(lexer.text)
-i = True
-while i:
-    i = lexer.lex()
-    print(i)
-print("\n")
-print("Error log:")
-print(lexer.error_log)
+if len(sys.argv)>1:
+    input_test = ""
+    try:
+        with open(sys.argv[1], "r") as f:
+            input_test = f.read()
+    except FileNotFoundError:
+        print(f"ERROR: The file {sys.argv[1]} was not found.")
+    except IOError:
+        print(f"ERROR: An error occurred while reading the file {sys.argv[1]}.")
+
+    if input_test:
+        lexer = Lexer(input_test)
+        print("Input text: ")
+        print(lexer.text)
+        i = True
+        while i:
+            i = lexer.lex()
+            print(i)
+        print("\n")
+        print("Error log:")
+        print(lexer.error_log)
+else:
+    print("ERROR: No input file specified.")
+    print("\n")
+    print("Usage:")
+    print(">> python3 main.py path_to_file")
