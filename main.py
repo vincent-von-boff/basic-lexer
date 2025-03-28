@@ -1,10 +1,10 @@
 import sys
 import string
-from enum import Enum, auto
+from enum import Enum, IntEnum, auto
 from dataclasses import dataclass
 from typing import List
 
-class Error_t(Enum):
+class Error_t(IntEnum):
     SUCCESS = auto()
     EOF = auto()
     INVALID_CHAR = auto()
@@ -28,15 +28,6 @@ class ERROR:
 class Token_t(Enum):
     NUMBER = auto()
     NAME = auto()
-
-    # Keywords
-    FUNC_KW = "function"
-    RETURN_KW = "return"
-    FOR_KW = "for"
-    IF_KW = "if"
-    ELSE_KW = "else"
-    THEN_KW = "then" 
-    WHILE_KW = "while"
     
     PLUS_SIGN = auto()
     MINUS_SIGN = auto()
@@ -74,6 +65,15 @@ class Token_t(Enum):
     TAB = auto()
 
     STRING_LITERAL = auto()
+
+    # Keywords
+    FUNC_KW = "function"
+    RETURN_KW = "return"
+    FOR_KW = "for"
+    IF_KW = "if"
+    ELSE_KW = "else"
+    THEN_KW = "then" 
+    WHILE_KW = "while"
 
 
 class Token:
